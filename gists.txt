@@ -1,0 +1,100 @@
+
+### Sound system setup and volume keys mapping ###
+
+1. Installed pipewire-jack, pipewire-alsa pipewire-pulse qjacktl pavucontrol for interfacing the audio thingys and adjusted the volume
+through pavucontrol for 100%
+
+sudo pacman -Syu pipewire-jack pipewire-alsa pipewire-pulse qjackctl pavucontrol
+
+2. Now we need to set the volume button mapping through this blog, we will be mapping the keys through alsa commands
+
+blog : https://www.ejmastnak.com/tutorials/arch/volume/
+
+	- Wrote a custom script which was placed in ~/scripts/volume.sh
+	- The script can be used with additonal command line parameters to either increase/decrease or mute the volume
+	- installed xkeybinds from pacman repository
+	- identified the keybindings for the same using 'xev' command
+		- XF86AudioMute -> For the mute switch
+		- XF86AudioLowerVolume - Decrease volume
+		- XF86AudioRaisrVolume - Increaase volume
+	- Used the command "xbindkeys --defaults > ~/.xbindkeysrc"
+	- And placed the following keybindings in the source file
+		# Use XF86AudioMute to mute volume
+		"${HOME}/scripts/volume-pulse.sh mute"
+		   XF86AudioMute
+
+		# Use XF86AudioRaiseVolume to raise volume
+		"${HOME}/scripts/volume-pulse.sh raise"
+		   XF86AudioRaiseVolume
+
+		# Use XF86AudioLowerVolume to lower volume
+		"${HOME}/scripts/volume-pulse.sh lower"
+		   XF86AudioLowerVolume	
+
+########################################################################################################################################
+
+
+### Keybinding backlight keys ###
+
+Note : Referenced blog https://www.ejmastnak.com/tutorials/arch/backlight/
+
+1. Checked the /sys/class/backlight/intel_backlight
+	- The brightness and the max_brightness files will be used in main here
+	- When the value in the brightness file is adjusted, the backlight power of the display is changed.
+	- Added my user to the video group 
+		$ sudo usermod -aG video burpcat
+	- Created a new file and vim in /etc/udev.rules.d/backlight.rules and wrote
+		# This code would go inside `/etc/udev/rules.d/backlight.rules`
+
+		# Set `video` as the owning group for the `/sys/class/backlight/intel_backlight/brightness` file
+		RUN+="/bin/chgrp video /sys/class/backlight/intel_backlight/brightness"
+
+		# Give write permisssions to the owning group of the `brightness` file
+		RUN+="/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
+
+2. Install acpid and enable the daemon
+	# Install the acpid package
+	$ sudo pacman -S acpid
+
+	# Enable and start the acpid daemon
+	$ systemctl enable --now acpid.service
+
+3. Run $ acpi_listen and press the keys required which come upto BRTUP and BRTDN
+
+4. Now create a folder named handlers in /etc/acpi and now in /etc/acpi/handlers create a file named backlight.sh and write the following code in it
+
+	#!/bin/sh
+	# Location: /etc/acpi/handlers/backlight.sh
+	# A script to control backlight brightness with ACPI events
+	# Argument $1: either '-' for brightness up or '+' for brightness down
+
+	# Path to the sysfs file controlling backlight brightness
+	brightness_file="/sys/class/backlight/intel_backlight/brightness"
+
+	# Step size for increasing/decreasing brightness.
+	# Adjust this to a reasonable value based on the value of the file
+	# `/sys/class/backlight/intel_backlight/max_brightness` on your computer.
+	step=20
+
+	# Some scary-looking but straightforward Bash arithmetic and input/output redirection
+	case $1 in
+	  # Increase current brightness by `step` when `+` is passed to the script
+	  +) echo $(($(< "${brightness_file}") + ${step})) > "${brightness_file}";;
+
+	  # Decrease current brightness by `step` when `-` is passed to the script
+	  -) echo $(($(< "${brightness_file}") - ${step})) > "${brightness_file}";;
+	esac
+
+5. Run the following command to make it executavle "$ sudo chmod +x /etc/acpi/handlers/backlight.sh"
+
+6. Now we need to create files which match the events in /etc/acpi/events folder
+	
+	# Inside /etc/acpi/events/BRTUP
+	event=video/brightnessup
+	action=/etc/acpi/handlers/backlight.sh +
+
+	# Inside /etc/acpi/events/BRTDN
+	event=video/brightnessdown
+	action=/etc/acpi/handlers/backlight.sh 
+
+-

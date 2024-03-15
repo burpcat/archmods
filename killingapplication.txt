@@ -1,0 +1,4 @@
+
+
+1. Installed xorg-xkill from aur
+2. use command pkill appname and its done

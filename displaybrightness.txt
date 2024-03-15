@@ -1,0 +1,35 @@
+
+# Since the human can observe minute changes in lower levels of brightness, but the case is not same in higher ranges of
+# brightness, to fix this we use a library called brillo, which adjusts the brightness exponentially as to human scale.
+
+1. First we clone the brillo repository
+	$ git clone https://github.com/CameronNemo/brillo.git
+2. We run the following commands
+	$ sudo make
+	$ sudo make install.setgid
+3. Running just $ brillo gives us the current screen brightness
+	$ brillo
+4. To increase or decrease the brightness normally we use
+	# Increase the brightness by 10%
+	$ brillo -A 10
+	
+	# Decrease the brightness by 10%
+	$ brillo -U 10
+
+	# we can adjust the integer at the end to change the percentage of growth
+
+5. To change the brightness according to the exponential scale which is satisfactory to human eye, we can use the -q tag
+
+6. So we bind both the commands to use xbindkeys, we navigate into .xbindkeysrc
+
+7. We place the following lines of code in the file
+
+	# Use XF86MonBrightnessDown to lower screen brightness
+	"brillo -q -U 10"
+	   XF86MonBrightnessDown
+
+	# Use XF86MonBrightnessUp to increase screen brightness
+	"brillo -q -A 10"
+	   XF86MonBrightnessUp
+
+8. Now restarting the window manager automatically maps the keys to the brightness and works perfectly

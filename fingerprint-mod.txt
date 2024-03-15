@@ -1,0 +1,15 @@
+
+
+# Install Python validity through yay
+$ yay -S python-validity
+
+
+# Run this directly through command line to enroll a fingerprint
+$ fprintd-enroll
+
+After installing, need to enable 
+
+Add the following line [1] above [2] in the file /etc/pam.d/system-auth
+
+[1] : auth       [success=3 default=ignore]  pam_fprintd.so  #added to use the fingerprint reader
+[2] : auth       [success=2 default=ignore]  pam_unix.so          try_first_pass nullok

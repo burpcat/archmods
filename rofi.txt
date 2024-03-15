@@ -1,0 +1,15 @@
+
+1. Install rofi through the command
+	$ sudo pacman -S rofi
+2. Now I replaced the dmenu launch througn modkey+p by commenting the lineout in dwm config and adding a similar keybind with xbindkeys
+	- I ran $ xbindkeys --multikey to get the keycombination
+	- Now i copied the state, keycode and the keysysms associated with the keycode and pasted it into
+	  the .xbindkeysrc file
+3. The default onboard themes can be browsed through #rofi-theme-selector
+4. The important thing to remember while adjusting the configuration which is present in .config/rofi/config.rasi, when adjusting the font type , size should be mentioned, otherwise it wont work
+5. Installed the rofi emoji plugin, and installed tools like
+	# to insert emojis into the input line
+	$ sudo pacman -S xdotool
+	
+	# to manage clipboard
+	$ sudo pacman -S xclip  

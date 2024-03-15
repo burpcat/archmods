@@ -1,0 +1,16 @@
+
+
+1. The copy function doesnt work by default in my vim editor by default
+
+2. So I had to create a vim configuration file in the home directory by the name in .vimrc
+
+3. So I placed the following configuration line, we place
+
+	" Map Ctrl+Shift+C to yank (copy) in visual mode
+	vnoremap <C-S-C> "+y
+
+4. Now we exit out of insert mode and run the command and we run
+
+:source ~/.vimrc
+
+5. After running it the following way, the copy functionality works by default

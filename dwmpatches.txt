@@ -1,0 +1,9 @@
+
+1. Download the patches to the patches folder
+2. Since config.h is the main file in which we do any modifications, we need to first copy config.h to config.def.h
+3. Now we need to install the patch using
+	$ patch -i patches/patch_name
+4. Now we need to run
+	$ sudo make clean install
+5. If the above step results in an error, we need to manually go to the files, inspect them and correct them
+6. Now after completing it, we need to move config.def.h to config.h and run step 4 again

@@ -1,0 +1,9 @@
+
+
+1. The creation of external display connection and management was achieved through the usage of initial congiguration with xrandr
+
+2. Using burpmonitorint and burpmonitorext, the commands were interfaced for manual configuration
+
+3. Then using autorandr, (read the docs), the manuality of the situation was automised
+
+

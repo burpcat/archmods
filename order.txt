@@ -1,0 +1,9 @@
+
+
+1. Configured buttons for keyboard for backlight and volume control
+2. Tried the fingerprint mod but had issues so stopped with it, but still have the way to run it
+3. Made small patches to dwm and learnt how to patch it properly without any errors
+4. Installing nerdfonts for all emojis, and any font emoji, the system automatically recognises them
+5. Installed brillo to manage screen brightness
+6. Created copy configuration for vim
+7. Took care of desktop notifications with dunst to observe changes in brightness and volume in the system

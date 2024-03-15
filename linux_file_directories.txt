@@ -1,0 +1,17 @@
+
+
+The following abbreviates to the linux file directory
+
+/bin = Holds the files which are executable programs for the system
+/sbin = Holds executable files which are essential for the system and are used by the superuser
+/lib = Holds all the libraries which are important for the executables present in /bin and /sbin
+/usr = contains similar directories which are present for the system but is localised to the user
+/usr/bin = contains files which are essential to the system and are installed by "any package manager" of the system/usr/local/bin = contains executable files which are installed by the user through the *make* command.
+/etc = "Editable Text Config", the behaviour of an executable can be modified here
+/home = This directory contains the users of the system which then lead to the home of the starting location of the 	user
+/boot = contains the files which are necessary to boot the system
+/dev = has the system devices as files
+/var = contains the variable files which change as the operating system boots
+/opt = contains all the optional files for the system
+/tmp = contains the files which are temporary to the operating system
+/proc = holds the temporary files which are created by the linux kernel to maintain the running state of the OS
